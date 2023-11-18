@@ -1,8 +1,26 @@
-import IconTrash from "@/icons/IconTrash"
-import BtnIncOrDec from "../BtnIncOrDec"
-import { Button } from "../ui/button"
+"use client"
 
-const Table = ()=> {
+import TableItem from "../TableItem"
+import axios from "axios"
+import { Item } from "@/types/item"
+import { useEffect, useState } from "react"
+
+
+
+const Table = () => {
+    const [items, setItem] = useState<Item[]>([])
+
+    const getItem = async () => {
+        const response = await axios.get<Item[]>(`http://localhost:8000/items`)
+        setItem(response.data);
+    }
+
+    useEffect(()=>{
+        getItem()
+    },[])
+
+    console.log(items)
+
     return (
         <div className="relative overflow-x-auto">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -20,20 +38,9 @@ const Table = ()=> {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="bg-white dark:bg-gray-800">
-                        <th scope="row" className="px-6 py-4 text-gray-900 whitespace-nowrap text-center font-bold">
-                            Canetas
-                        </th>
-                        <td className="py-4 w-full flex flex-row justify-center items-center gap-2">
-                            <BtnIncOrDec inc={false}/>
-                            <span className="text-lg">1</span>
-                            <BtnIncOrDec inc={true}/>
-                        </td>
-                        <td className="px-6 py-4 text-center">
-                            <Button variant="destructive"><IconTrash fontSize={18}/></Button>
-                        </td>
-                    </tr>
-                    
+                    {items.map((item : Item) => (
+                        <TableItem key={item._id} item={item} getItem={getItem}/>
+                    ))}
                 </tbody>
                 <tfoot>
                     <tr className="font-semibold text-gray-900 dark:text-white">

@@ -3,6 +3,16 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "../ui/button"
+import axios from "axios"
+import { Item } from "@/types/item"
+
+const postItem = async (item: {name: string, qtd: number}) => {
+    const response = await axios.get<Item>(`http://localhost:8000/items`, {
+        data: item
+    })
+
+    return response.data
+}
 
 const Form = ()=> {
     return(
