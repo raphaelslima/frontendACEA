@@ -1,18 +1,18 @@
 "use client"
 
 import TableItem from "../TableItem"
-import axios from "axios"
 import { Item } from "@/types/item"
-import { useEffect, useState } from "react"
-
-
+import { useContext, useEffect } from "react"
+import { fetchItem } from "@/api/route"
+import { ItemContext } from "@/context"
 
 const Table = () => {
-    const [items, setItem] = useState<Item[]>([])
+    const {items, setItem} = useContext(ItemContext)
+
 
     const getItem = async () => {
-        const response = await axios.get<Item[]>(`http://localhost:8000/items`)
-        setItem(response.data);
+        const response = await fetchItem()
+        setItem(response);
     }
 
     useEffect(()=>{
