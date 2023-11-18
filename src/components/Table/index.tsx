@@ -19,8 +19,6 @@ const Table = () => {
         getItem()
     },[])
 
-    console.log(items)
-
     return (
         <div className="relative overflow-x-auto">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -42,13 +40,6 @@ const Table = () => {
                         <TableItem key={item._id} item={item} getItem={getItem}/>
                     ))}
                 </tbody>
-                <tfoot>
-                    <tr className="font-semibold text-gray-900 dark:text-white">
-                        <th scope="row" className="px-6 py-3 text-base">Total</th>
-                        <td className="px-6 py-3"></td>
-                        <td className="px-6 py-3 text-center">3</td>
-                    </tr>
-                </tfoot>
             </table>
 </div>
     )
