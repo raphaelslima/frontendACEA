@@ -20,12 +20,12 @@ const postItem = async (data: {name: string, qtd: number}) => {
 
 const schema = yup.object({
     name: yup.string().required("Campo obrigatório"),
-    qtd: yup.number().required("Campo obrigatório").min(1,"Valor precisa ser pelo menis 1")
+    qtd: yup.number().required("Campo obrigatório").min(1,"Valor precisa ser pelo menos 1")
 })
 
 const Form = ()=> {
 
-    const {register, handleSubmit: onSubmit, formState: {errors}} = useForm({resolver: yupResolver(schema), 
+    const {register, resetField, handleSubmit: onSubmit, formState: {errors}} = useForm({resolver: yupResolver(schema), 
         defaultValues: {
         name: '',
         qtd: 1,
@@ -36,6 +36,8 @@ const Form = ()=> {
         await postItem(data)
         const items = await fetchItem()
         setItem(items)
+        resetField('name')
+        resetField('qtd')
     }
 
     return(
